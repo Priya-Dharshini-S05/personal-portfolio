@@ -16,7 +16,7 @@ contactForm.addEventListener("submit", async function (event) {
     formStatus.textContent = "Sending...";
 
     try {
-        const response = await fetch("http://localhost:5000/contact", {
+        const response = await fetch("https://portfolio-backend-xnym.onrender.com/contact", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
