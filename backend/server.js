@@ -3,9 +3,9 @@ const cors = require("cors");
 const { MongoClient } = require("mongodb");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
-const cors = require("cors");
 
 const app = express();
+
 app.use(cors({
     origin: "https://priya-dharshini-portfolioo.netlify.app"
 }));
@@ -13,7 +13,9 @@ app.use(cors({
 app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
+
 const client = new MongoClient(process.env.MONGODB_URI);
+
 const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -45,29 +47,28 @@ async function startServer() {
                     });
                 }
 
-                
                 await contacts.insertOne({
-                     name,
-                     email,
-                     message,
-                     createdAt: new Date()
-          });
+                    name,
+                    email,
+                    message,
+                    createdAt: new Date()
+                });
 
-               await transporter.sendMail({
-               from: process.env.EMAIL_USER,
-               to: process.env.EMAIL_USER,
-               replyTo: email,
-               subject: `New Portfolio Message from ${name}`,
-               text: `
-               Name: ${name}
-               Email: ${email}
+                await transporter.sendMail({
+                    from: process.env.EMAIL_USER,
+                    to: process.env.EMAIL_USER,
+                    replyTo: email,
+                    subject: `New Portfolio Message from ${name}`,
+                    text: `
+Name: ${name}
+Email: ${email}
 
-             Message:
-             ${message}
-           `
-           });
+Message:
+${message}
+                    `
+                });
 
-console.log("New contact message saved and email sent.");
+                console.log("New contact message saved and email sent.");
 
                 res.json({
                     message: "Message received successfully."
